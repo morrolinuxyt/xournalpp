@@ -5,25 +5,18 @@ PortAudioProducer::PortAudioProducer(Settings* settings, AudioQueue<float>* audi
 		  settings(settings),
 		  audioQueue(audioQueue)
 {
-	XOJ_INIT_TYPE(PortAudioProducer);
 }
 
 PortAudioProducer::~PortAudioProducer()
 {
-	XOJ_CHECK_TYPE(PortAudioProducer);
-
 	if (portaudio::System::exists())
 	{
 		portaudio::System::terminate();
 	}
-
-	XOJ_RELEASE_TYPE(PortAudioProducer);
 }
 
 std::list<DeviceInfo> PortAudioProducer::getInputDevices()
 {
-	XOJ_CHECK_TYPE(PortAudioProducer);
-
 	std::list<DeviceInfo> deviceList;
 
 	for (portaudio::System::DeviceIterator i = this->sys.devicesBegin(); i != sys.devicesEnd(); ++i)
@@ -41,8 +34,6 @@ std::list<DeviceInfo> PortAudioProducer::getInputDevices()
 
 const DeviceInfo PortAudioProducer::getSelectedInputDevice()
 {
-	XOJ_CHECK_TYPE(PortAudioProducer);
-
 	try
 	{
 		return DeviceInfo(&sys.deviceByIndex(this->settings->getAudioInputDevice()), true);
@@ -56,15 +47,11 @@ const DeviceInfo PortAudioProducer::getSelectedInputDevice()
 
 bool PortAudioProducer::isRecording()
 {
-	XOJ_CHECK_TYPE(PortAudioProducer);
-
 	return this->inputStream != nullptr && this->inputStream->isActive();
 }
 
 bool PortAudioProducer::startRecording()
 {
-	XOJ_CHECK_TYPE(PortAudioProducer);
-
 	// Check if there already is a recording
 	if (this->inputStream != nullptr)
 	{
@@ -118,9 +105,6 @@ bool PortAudioProducer::startRecording()
 int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffer, unsigned long framesPerBuffer,
 									  const PaStreamCallbackTimeInfo* timeInfo, PaStreamCallbackFlags statusFlags)
 {
-	XOJ_CHECK_TYPE(PortAudioProducer);
-	std::unique_lock<std::mutex> lock(this->audioQueue->syncMutex());
-
 	if (statusFlags)
 	{
 		g_message("PortAudioProducer: statusFlag: %s", std::to_string(statusFlags).c_str());
@@ -128,7 +112,7 @@ int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffe
 
 	if (inputBuffer != nullptr)
 	{
-		unsigned long providedFrames = framesPerBuffer * this->inputChannels;
+		size_t providedFrames = framesPerBuffer * this->inputChannels;
 
 		this->audioQueue->push((float*) inputBuffer, providedFrames);
 	}
@@ -137,8 +121,6 @@ int PortAudioProducer::recordCallback(const void* inputBuffer, void* outputBuffe
 
 void PortAudioProducer::stopRecording()
 {
-	XOJ_CHECK_TYPE(PortAudioProducer);
-
 	// Stop the recording
 	if (this->inputStream != nullptr)
 	{

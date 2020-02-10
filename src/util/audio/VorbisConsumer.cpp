@@ -5,20 +5,14 @@ VorbisConsumer::VorbisConsumer(Settings* settings, AudioQueue<float>* audioQueue
 		: settings(settings),
 		  audioQueue(audioQueue)
 {
-	XOJ_INIT_TYPE(VorbisConsumer);
 }
 
 VorbisConsumer::~VorbisConsumer()
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
-	XOJ_RELEASE_TYPE(VorbisConsumer);
 }
 
 bool VorbisConsumer::start(string filename)
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
 	double sampleRate;
 	unsigned int channels;
 	this->audioQueue->getAudioAttributes(sampleRate, channels);
@@ -47,14 +41,14 @@ bool VorbisConsumer::start(string filename)
 				std::unique_lock<std::mutex> lock(audioQueue->syncMutex());
 
 				float buffer[64 * channels];
-				unsigned long bufferLength;
+				size_t bufferLength;
 				double audioGain = this->settings->getAudioGain();
 
 				while (!(this->stopConsumer || (audioQueue->hasStreamEnded() && audioQueue->empty())))
 				{
 					audioQueue->waitForProducer(lock);
 
-					while (!audioQueue->empty())
+					while (audioQueue->size() > 64 * channels || (audioQueue->hasStreamEnded() && !audioQueue->empty()))
 					{
 						this->audioQueue->pop(buffer, bufferLength, 64 * channels);
 
@@ -67,7 +61,7 @@ bool VorbisConsumer::start(string filename)
 							}
 						}
 
-						sf_writef_float(sfFile, buffer, 64);
+						sf_writef_float(sfFile, buffer, std::min<size_t>(bufferLength / channels, 64));
 					}
 				}
 
@@ -78,8 +72,6 @@ bool VorbisConsumer::start(string filename)
 
 void VorbisConsumer::join()
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
 	// Join the consumer thread to wait for completion
 	if (this->consumerThread && this->consumerThread->joinable())
 	{
@@ -89,8 +81,6 @@ void VorbisConsumer::join()
 
 void VorbisConsumer::stop()
 {
-	XOJ_CHECK_TYPE(VorbisConsumer);
-
 	// Stop consumer
 	this->audioQueue->signalEndOfStream();
 

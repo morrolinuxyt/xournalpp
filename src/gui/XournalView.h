@@ -12,7 +12,6 @@
 #pragma once
 
 #include "control/zoom/ZoomListener.h"
-#include "control/zoom/ZoomGesture.h"
 #include "model/DocumentListener.h"
 #include "model/PageRef.h"
 #include "widgets/XournalWidget.h"
@@ -38,7 +37,7 @@ class HandRecognition;
 class XournalView : public DocumentListener, public ZoomListener
 {
 public:
-	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling, ZoomGesture* zoomGesture);
+	XournalView(GtkWidget* parent, Control* control, ScrollHandling* scrollHandling);
 	virtual ~XournalView();
 
 public:
@@ -78,7 +77,7 @@ public:
 
 	bool actionDelete();
 
-	void endTextAllPages(XojPageView* except = NULL);
+	void endTextAllPages(XojPageView* except = nullptr);
 
 	void resetShapeRecognizer();
 
@@ -91,7 +90,7 @@ public:
 
 	void setSelection(EditSelection* selection);
 	EditSelection* getSelection();
-	void deleteSelection(EditSelection* sel = NULL);
+	void deleteSelection(EditSelection* sel = nullptr);
 	void repaintSelection(bool evenWithoutSelection = false);
 
 	TextEditor* getTextEditor();
@@ -124,12 +123,6 @@ public:
 	 */
 	ScrollHandling* getScrollHandling();
 
-	/**
-	 * Get the handler for the zoom gesture
-	 * @return The handler
-	 */
-	ZoomGesture* getZoomGestureHandler();
-
 public:
 	// ZoomListener interface
 	void zoomChanged();
@@ -161,32 +154,28 @@ private:
 	static void staticLayoutPages(GtkWidget *widget, GtkAllocation* allocation, void* data);
 
 private:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * Scrollbars
 	 */
-	ScrollHandling* scrollHandling = NULL;
+	ScrollHandling* scrollHandling = nullptr;
 
-	ZoomGesture* zoomGesture;
-
-	GtkWidget* widget = NULL;
+	GtkWidget* widget = nullptr;
 	double margin = 75;
 
-	XojPageView** viewPages = NULL;
+	XojPageView** viewPages = nullptr;
 	size_t viewPagesLen = 0;
 
-	Control* control = NULL;
+	Control* control = nullptr;
 
 	size_t currentPage = 0;
 	size_t lastSelectedPage = -1;
 
-	PdfCache* cache = NULL;
+	PdfCache* cache = nullptr;
 
 	/**
 	 * Handler for rerendering pages / repainting pages
 	 */
-	RepaintHandler* repaintHandler = NULL;
+	RepaintHandler* repaintHandler = nullptr;
 
 	/**
 	 * Memory cleanup timeout
@@ -196,7 +185,7 @@ private:
 	/**
 	 * Helper class for Touch specific fixes
 	 */
-	HandRecognition* handRecognition = NULL;
+	HandRecognition* handRecognition = nullptr;
 
 	friend class Layout;
 };

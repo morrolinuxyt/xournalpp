@@ -1,21 +1,25 @@
-cmake_minimum_required (VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.10)
 
 project ("Xournal++" CXX C)
 
+## Project related Variables
 ## Also update changelog in debian folder!
 set (CPACK_PACKAGE_VERSION_MAJOR "1")
 set (CPACK_PACKAGE_VERSION_MINOR "0")
-set (CPACK_PACKAGE_VERSION_PATCH "13")
+set (CPACK_PACKAGE_VERSION_PATCH "15")
 set (CPACK_DEBIAN_PACKAGE_RELEASE 1)
 set (PROJECT_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 set (PROJECT_PACKAGE "xournalpp")
 set (PROJECT_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set (PROJECT_URL "https://github.com/xournalpp/xournalpp")
 
-set (CMAKE_MODULE_PATH
-    "${PROJECT_SOURCE_DIR}/cmake/find"
-    "${PROJECT_SOURCE_DIR}/cmake/include"
-)
+## CMAKE_Variables
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find" "${PROJECT_SOURCE_DIR}/cmake/include")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_definitions(-D_USE_MATH_DEFINES)
 
 # package version
 include (Version)
@@ -37,10 +41,6 @@ set (PACKAGE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/share")
 
 # Git repo info
 include (GitRepo)
-
-## C++11 ##
-include (C++11)
-CheckCXX11 (FATAL_ERROR)
 
 ## os specific library ending ##
 if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")

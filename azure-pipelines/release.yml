@@ -1,43 +1,101 @@
 trigger:
-  - master
+  tags:
+    include:
+      - ?*.?*.?*
+    exclude:
+      - nightly
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Nightly build
+    branches:
+      include:
+      - master
 pr: none
-
+variables:
+  versionNumber: ''
+  versionTag: ''
+  buildType: 'unknown'
 stages:
-  - stage: Release
+  - stage: SetVersionInformation
     jobs:
-      - job: 'Linux'
+      - job: 'Versioning'
         pool:
           vmImage: 'ubuntu-16.04'
-        displayName: 'Build for Linux'
+        displayName: 'Set Build Number'
+        steps:
+          - bash: |
+              mkdir build
+              cd build
+              cmake ..
+              exit 0
+            displayName: 'Create Version Information'
+          - bash: |
+              VER=$(cat VERSION | sed '1q;d')
+              TAG=`date +"%Y%m%d"`
+              echo "##vso[build.updatebuildnumber]${VER}-nightly.${TAG}"
+            name: 'VersionNightly'
+            displayName: 'Set Version Information for Nightly'
+            workingDirectory: ./build
+            condition: or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['runForRelease'], 'False')) # Run for scheduled (nightlies)
+          - bash: |
+              VER=$(cat VERSION | sed '1q;d')
+              echo "##vso[build.updatebuildnumber]${VER}"
+            name: 'VersionRelease'
+            displayName: 'Set Version Information for Release'
+            workingDirectory: ./build
+            condition: or(ne(variables['Build.Reason'], 'Schedule'), ne(variables['runForRelease'], 'False')) # Run for non-scheduled (release)
+  - stage: Release
+    jobs:
+      - job: 'Ubuntu'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        displayName: 'Build for Ubuntu'
         condition: always()
         steps:
+          - template: steps/install_deps_ubuntu.yml
           - template: steps/build_linux.yml
             parameters:
-              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON'
-          - bash: |
-              cmake .. -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"
-              cmake --build . --target package
-            workingDirectory: ./build
-            displayName: 'Generate packages'
+              build_type: 'RelWithDebInfo'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
+              cmake_commands: '--target package'
           - task: PublishPipelineArtifact@1
             inputs:
-              artifactName: 'linux-packages'
+              artifactName: 'linux-ubuntu-packages'
               targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
             displayName: 'Publish packages'
+      - job: 'Debian'
+        pool:
+          vmImage: 'ubuntu-16.04'
+        container:
+          image: littlehuba/debian-latest-sudo:latest
+        displayName: 'Build for Debian'
+        condition: always()
+        steps:
+          - bash: |
+              sudo apt-get update
+              sudo apt-get install -y gcc g++ cmake ninja-build libcppunit-dev libgtk-3-dev libpoppler-glib-dev libxml2-dev portaudio19-dev libsndfile-dev liblua5.3-dev \
+                                      libzip-dev gettext lsb-release
+            displayName: 'Install dependencies'
+          - template: steps/build_linux.yml
+            parameters:
+              build_type: 'RelWithDebInfo'
+              cmake_flags: '-DCMAKE_DEBUG_INCLUDES_LDFLAGS=ON -DENABLE_CPPUNIT=ON -DDEBUG_COMPILE=ON -DCMAKE_INSTALL_PREFIX=$PWD/staging -DCPACK_GENERATOR="TGZ;DEB"'
+              cmake_commands: '--target package'
           - task: PublishPipelineArtifact@1
             inputs:
-              artifactName: 'VERSION'
-              targetPath: '$(System.DefaultWorkingDirectory)/build/VERSION'
-            displayName: 'Upload project version file'
+              artifactName: 'linux-debian-packages'
+              targetPath: '$(System.DefaultWorkingDirectory)/build/packages'
+            displayName: 'Publish packages'
+          
       - job: Windows
         pool:
           vmImage: 'vs2017-win2016'
-        displayName: 'Build Release for Windows'
+        displayName: 'Build for Windows'
         condition: always()
         steps:
           - template: steps/build_windows.yml
             parameters:
-              build_type: 'Release'
+              build_type: 'RelWithDebInfo'
               cmake_flags: ''
           - script: |
               set PATH=%PATH%;%CD:~0,2%\msys64\usr\bin;%CD:~0,2%\msys64\mingw64\bin"
@@ -62,7 +120,7 @@ stages:
         steps:
           - template: steps/build_mac_native.yml
             parameters:
-              build_type: 'Release'
+              build_type: 'RelWithDebInfo'
               cmake_flags: ''
           - bash: |
               export PATH="$HOME/.local/bin:/Users/git-bin/gtk/inst/bin:$PATH"

@@ -26,7 +26,6 @@ class ToolbarData;
 class ToolbarModel;
 class XournalView;
 class MainWindowToolbarMenu;
-class ZoomGesture;
 
 
 class MainWindow : public GladeGui, public LayerCtrlListener
@@ -150,19 +149,15 @@ private:
 	void loadMainCSS(GladeSearchpath* gladeSearchPath, const gchar* cssFilename);
 	
 private:
-	XOJ_TYPE_ATTRIB;
-
 	Control* control;
 
-	XournalView* xournal = NULL;
-	GtkWidget* winXournal = NULL;
-	ScrollHandling* scrollHandling = NULL;
-
-	ZoomGesture* zoomGesture = NULL;
+	XournalView* xournal = nullptr;
+	GtkWidget* winXournal = nullptr;
+	ScrollHandling* scrollHandling = nullptr;
 
 	// Toolbars
 	ToolMenuHandler* toolbar;
-	ToolbarData* selectedToolbar = NULL;
+	ToolbarData* selectedToolbar = nullptr;
 	bool toolbarIntialized = false;
 
 	bool maximized = false;

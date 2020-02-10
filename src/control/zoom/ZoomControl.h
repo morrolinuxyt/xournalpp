@@ -141,7 +141,7 @@ public:
 	 * @param zoom Current zoom value
 	 * @param relative If the zoom is relative to the start value (for Gesture)
 	 */
-	void zoomSequnceChange(double zoom, bool relative);
+	void zoomSequenceChange(double zoom, bool relative);
 
 	/**
 	 * Clear all stored data from startZoomSequence()
@@ -195,10 +195,8 @@ private:
 	void zoomPresentation();
 
 private:
-	XOJ_TYPE_ATTRIB;
-
-	XournalView* view = NULL;
-	Control* control = NULL;
+	XournalView* view = nullptr;
+	Control* control = nullptr;
 
 	std::vector<ZoomListener*> listener;
 

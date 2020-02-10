@@ -32,6 +32,8 @@ public:
 	 */
 	Point(const Point& p);
 
+	Point& operator=(Point const&) = default;
+
 	/**
 	 * @brief Point from two values.
 	 * @param x X value of the point.
@@ -80,8 +82,6 @@ public:
 	bool equalsPos(const Point& p);
 
 public:
-	XOJ_TYPE_ATTRIB;
-
 	/**
 	 * @brief Private storage for x coordinate.
 	 */

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-20 00:03+0000\n"
-"PO-Revision-Date: 2019-09-20 00:21\n"
+"POT-Creation-Date: 2019-10-12 21:00+0000\n"
+"PO-Revision-Date: 2019-10-12 21:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -82,29 +82,29 @@ msgstr "Attacher le fichier au journal"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:140
 msgid "Attribute \"{1}\" could not be parsed as double, the value is \"{2}\""
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme double, la valeur est \"{2}\""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:132
 msgid "Attribute \"{1}\" could not be parsed as double, the value is NULL"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme double, la valeur est NULL"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre à virgule (double), la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:160
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:183
 msgid "Attribute \"{1}\" could not be parsed as int, the value is \"{2}\""
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme int, la valeur est \"{2}\""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (int), la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:152
 msgid "Attribute \"{1}\" could not be parsed as int, the value is NULL"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme int, la valeur est NULL"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (int), la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:205
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:228
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is \"{2}\""
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme taille_t, la valeur est \"{2}\""
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (size_t), la valeur est \"{2}\""
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:197
 msgid "Attribute \"{1}\" could not be parsed as size_t, the value is NULL"
-msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme taille_t, la valeur est NULL"
+msgstr "L'attribut \"{1}\" n'a pas pu être analysé comme nombre entier (size_t), la valeur est NULL"
 
 #: ../src/control/xojfile/LoadHandlerHelper.cpp:70
 msgid "Attribute color not set!"
@@ -957,7 +957,7 @@ msgstr "Enregistrer sous..."
 msgid "Save File"
 msgstr "Enregistrer le fichier"
 
-#: ../src/control/jobs/CustomExportJob.cpp:162
+#: ../src/control/jobs/CustomExportJob.cpp:163
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
 msgstr "Erreur d'enregistrement du fichier : {1}"
@@ -1471,7 +1471,7 @@ msgstr "xoj-preview-extractor: appeller avec INPUT.xoj OUTPUT.png"
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:158
 msgid "xoj-preview-extractor: could not find icon \"{1}\""
-msgstr ""
+msgstr "icône introuvable \"{1}\""
 
 #: ../src/xoj-preview-extractor/xournal-thumbnailer.cpp:102
 msgid "xoj-preview-extractor: file \"{1}\" contains no preview"
@@ -1787,7 +1787,7 @@ msgstr "Espaces réservés disponibles"
 
 #: ../ui/settings.glade:2019
 msgid "Background color between pages"
-msgstr ""
+msgstr "Couleur d'arrière-plan entre les pages"
 
 #: ../ui/settings.glade:2153
 msgid "Big cursor for pen"
@@ -1803,7 +1803,7 @@ msgstr "Couleur de bordure pour la page courante et d'autres sélections"
 
 #: ../ui/about.glade:127
 msgid "Built on"
-msgstr ""
+msgstr "Basé sur"
 
 #: ../ui/settings.glade:1201
 msgid "Button 1"
@@ -2027,7 +2027,7 @@ msgstr "Décalage de la première page "
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: ../ui/about.glade:280
+#: ../ui/about.glade:281
 msgid "GNU GPLv2 or later"
 msgstr "GNU GPLv2 ou supérieur"
 
@@ -2037,7 +2037,7 @@ msgstr "Gain"
 
 #: ../ui/about.glade:153
 msgid "Git commit"
-msgstr ""
+msgstr "Git commit"
 
 #: ../ui/settings.glade:2107
 msgid "Global"
@@ -2139,7 +2139,7 @@ msgstr "Disposition"
 msgid "Left / Right-Handed"
 msgstr "Gaucher / Droitier"
 
-#: ../ui/about.glade:264
+#: ../ui/about.glade:265
 msgid "License"
 msgstr "Licence"
 
@@ -2249,7 +2249,7 @@ msgstr "_Format de papier"
 msgid "Paper b_ackground"
 msgstr "_Arrière-plan de papier"
 
-#: ../ui/about.glade:246
+#: ../ui/about.glade:247
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr "Partiellement basé sur Xournal\n"
@@ -2289,7 +2289,7 @@ msgstr "Sensibilité de la pression"
 
 #: ../ui/about.glade:167
 msgid "RELEASE_IDENTIFIER"
-msgstr ""
+msgstr "RELEASE_IDENTIFIER"
 
 #: ../ui/exportSettings.glade:127
 msgid "Range"
@@ -2500,7 +2500,7 @@ msgstr "Blanc"
 msgid "Width:"
 msgstr "Largeur :"
 
-#: ../ui/about.glade:231
+#: ../ui/about.glade:232
 msgid "With help from the community"
 msgstr "Avec l'aide de la communauté"
 

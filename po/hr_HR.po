@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xournalpp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-20 00:03+0000\n"
-"PO-Revision-Date: 2019-09-20 00:21\n"
+"POT-Creation-Date: 2019-10-12 21:00+0000\n"
+"PO-Revision-Date: 2019-10-12 21:05\n"
 "Last-Translator: Ulrich Huber (LittleHuba)\n"
 "Language-Team: Croatian\n"
 "Language: hr_HR\n"
@@ -934,7 +934,7 @@ msgstr ""
 msgid "Save File"
 msgstr ""
 
-#: ../src/control/jobs/CustomExportJob.cpp:162
+#: ../src/control/jobs/CustomExportJob.cpp:163
 #: ../src/control/jobs/SaveJob.cpp:143
 msgid "Save file error: {1}"
 msgstr ""
@@ -1962,7 +1962,7 @@ msgstr ""
 msgid "Fullscreen"
 msgstr ""
 
-#: ../ui/about.glade:280
+#: ../ui/about.glade:281
 msgid "GNU GPLv2 or later"
 msgstr ""
 
@@ -2072,7 +2072,7 @@ msgstr ""
 msgid "Left / Right-Handed"
 msgstr ""
 
-#: ../ui/about.glade:264
+#: ../ui/about.glade:265
 msgid "License"
 msgstr ""
 
@@ -2181,7 +2181,7 @@ msgstr ""
 msgid "Paper b_ackground"
 msgstr ""
 
-#: ../ui/about.glade:246
+#: ../ui/about.glade:247
 msgid "Partially based on Xournal\n"
 "by Denis Auroux"
 msgstr ""
@@ -2431,7 +2431,7 @@ msgstr ""
 msgid "Width:"
 msgstr ""
 
-#: ../ui/about.glade:231
+#: ../ui/about.glade:232
 msgid "With help from the community"
 msgstr ""
 

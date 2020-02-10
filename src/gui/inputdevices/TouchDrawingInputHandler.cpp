@@ -10,27 +10,16 @@
 
 TouchDrawingInputHandler::TouchDrawingInputHandler(InputContext* inputContext) : PenInputHandler(inputContext)
 {
-	XOJ_INIT_TYPE(TouchDrawingInputHandler);
 }
 
 TouchDrawingInputHandler::~TouchDrawingInputHandler()
 {
-	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
-
-	XOJ_RELEASE_TYPE(TouchDrawingInputHandler);
 }
 
 bool TouchDrawingInputHandler::handleImpl(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
-
 	// Only handle events when there is no active gesture
 	GtkXournal* xournal = inputContext->getXournal();
-	if (xournal->view->getControl()->getWindow()->isGestureActive())
-	{
-		// Do not further relay events as they are of no interest
-		return true;
-	}
 
 	// Disallow multitouch
 	if (this->currentSequence && this->currentSequence != event->sequence)
@@ -94,8 +83,6 @@ bool TouchDrawingInputHandler::handleImpl(InputEvent* event)
 
 bool TouchDrawingInputHandler::changeTool(InputEvent* event)
 {
-	XOJ_CHECK_TYPE(TouchDrawingInputHandler);
-
 	Settings* settings = this->inputContext->getSettings();
 	ButtonConfig* cfgTouch = settings->getTouchButtonConfig();
 	ToolHandler* toolHandler = this->inputContext->getToolHandler();
